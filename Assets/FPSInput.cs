@@ -64,8 +64,6 @@ public class FPSInput : MonoBehaviour
             }
         } 
 
-        Debug.Log(current_speed);
-
         animator.SetBool("move_forward", move_forward);
         animator.SetBool("move_backward", move_backward);
         animator.SetBool("move_right", move_right);
