@@ -35,43 +35,29 @@ public class FPSInput : MonoBehaviour
 
     void AnimationController(float deltaX, float deltaZ)
     {
-        float current_speed;
+        bool move_forward = Math.Round(deltaZ, 2) > 0f;
+        bool move_backward = Math.Round(deltaZ, 2) < 0f;
+        bool move_left = Math.Round(deltaX, 2) < 0f;
+        bool move_right = Math.Round(deltaX, 2) > 0f;
 
-        bool move_forward = false;
-        bool move_backward = false;
-        bool move_right = false;
-        bool move_left = false;
+        bool move_bl = move_backward & move_left;
+        if (move_bl) {
+            move_backward = false;
+            move_left = false;
+        }
 
-
-        if (Math.Abs(deltaZ) > Math.Abs(deltaX)) 
-        {
-            current_speed = Math.Abs(deltaZ); 
-            if (deltaZ > 0)
-            {
-                move_forward = true;
-            } else {
-                move_backward = true;
-            }
-        } 
-        else 
-        {
-            current_speed = Math.Abs(deltaX);
-            if (deltaX > 0)
-            {
-                move_right = true;
-            } else {
-                move_left = true;
-            }
-        } 
-
-        Debug.Log(current_speed);
+        bool move_br = move_backward & move_right;
+        if (move_br) {
+            move_backward = false;
+            move_right = false;
+        }
 
         animator.SetBool("move_forward", move_forward);
         animator.SetBool("move_backward", move_backward);
         animator.SetBool("move_right", move_right);
         animator.SetBool("move_left", move_left);
-
-        animator.SetFloat("speed", current_speed);
+        animator.SetBool("move_bl", move_bl);
+        animator.SetBool("move_br", move_br);
     }
 
     // Update is called once per frame
